@@ -1,5 +1,5 @@
 # Content
-
+Link to playground Flow assignment: https://play.onflow.org/e94d1374-4c89-40a1-9221-3fcf9d2f9bc2
 Week long home assignment.
 Deployable in the Flow playground.
 

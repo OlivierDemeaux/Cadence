@@ -9,3 +9,4 @@ I trully had a lot of fun doing this home assignment. I learned a lot and really
 It wasn't easy.
 
 Update: Didn't get the job..
+Making the repo public now.

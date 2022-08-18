@@ -4,8 +4,6 @@ import "../flow/config";
 import styles from "../styles/Navbar.module.css";
 
 export default function Navbar() {
-  // Use the AuthContext to get values for the currentUser
-  // and helper functions for logIn and logOut
   const { currentUser, logOut, logIn } = useAuth();
 
   return (

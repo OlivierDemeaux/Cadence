@@ -498,4 +498,4 @@ pub contract Domains: NonFungibleToken {
   access(account) fun updateNameHashToID(nameHash: String, id: UInt64) {
     self.nameHashToIDs[nameHash] = id
   }
-}
+} 

@@ -1,35 +1,48 @@
 /**
+
 # The Flow Fungible Token standard
+
 ## `FungibleToken` contract interface
-The interface that all Fungible Token contracts would have to conform to.
+
+The interface that all fungible token contracts would have to conform to.
 If a users wants to deploy a new token contract, their contract
 would need to implement the FungibleToken interface.
+
 Their contract would have to follow all the rules and naming
 that the interface specifies.
+
 ## `Vault` resource
+
 Each account that owns tokens would need to have an instance
 of the Vault resource stored in their account storage.
+
 The Vault resource has methods that the owner and other users can call.
+
 ## `Provider`, `Receiver`, and `Balance` resource interfaces
+
 These interfaces declare pre-conditions and post-conditions that restrict
 the execution of the functions in the Vault.
+
 They are separate because it gives the user the ability to share
 a reference to their Vault that only exposes the fields functions
 in one or more of the interfaces.
+
 It also gives users the ability to make custom resources that implement
 these interfaces to do various things with the tokens.
 For example, a faucet can be implemented by conforming
 to the Provider interface.
-By using resources and interfaces, users of Fungible Token contracts
+
+By using resources and interfaces, users of FungibleToken contracts
 can send and receive tokens peer-to-peer, without having to interact
 with a central ledger smart contract. To send tokens to another user,
 a user would simply withdraw the tokens from their Vault, then call
 the deposit function on another user's Vault to complete the transfer.
+
 */
 
 /// FungibleToken
 ///
-/// The interface that Fungible Token contracts implement.
+/// The interface that fungible token contracts implement.
 ///
 pub contract interface FungibleToken {
 
@@ -139,6 +152,7 @@ pub contract interface FungibleToken {
         // every Fungible Token contract that implements the FungibleToken interface
         // must define a concrete `Vault` resource that conforms to the `Provider`, `Receiver`,
         // and `Balance` interfaces, and declares their required fields and functions
+
         /// The total balance of the vault
         ///
         pub var balance: UFix64
@@ -168,12 +182,6 @@ pub contract interface FungibleToken {
         /// deposit takes a Vault and adds its balance to the balance of this Vault
         ///
         pub fun deposit(from: @Vault) {
-            // Assert that the concrete type of the deposited vault is the same
-            // as the vault that is accepting the deposit
-            pre {
-                from.isInstance(self.getType()): 
-                    "Cannot deposit an incompatible token type"
-            }
             post {
                 self.balance == before(self.balance) + before(from.balance):
                     "New Vault balance must be the sum of the previous balance and the deposited Vault"

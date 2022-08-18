@@ -12,29 +12,19 @@ import {
   updateBioForDomain,
 } from "../../flow/transactions";
 
-// constant representing seconds per year
 const SECONDS_PER_YEAR = 365 * 24 * 60 * 60;
 
 export default function ManageDomain() {
-  // Use AuthContext to gather data for current user
   const { currentUser, isInitialized } = useAuth();
 
-  // Next Router to get access to `nameHash` query parameter
   const router = useRouter();
-  // State variable to store the DomainInfo
   const [domainInfo, setDomainInfo] = useState();
-  // State variable to store the bio given by user
   const [bio, setBio] = useState("");
-  // State variable to store the address given by user
   const [linkedAddr, setLinkedAddr] = useState("");
-  // State variable to store how many years to renew for
   const [renewFor, setRenewFor] = useState(1);
-  // Loading state
   const [loading, setLoading] = useState(false);
-  // State variable to store cost of renewal
   const [cost, setCost] = useState(0.0);
 
-  // Function to load the domain info
   async function loadDomainInfo() {
     try {
       const info = await getDomainInfoByNameHash(
@@ -48,7 +38,6 @@ export default function ManageDomain() {
     }
   }
 
-  // Function which updates the bio transaction
   async function updateBio() {
     try {
       setLoading(true);
@@ -62,7 +51,6 @@ export default function ManageDomain() {
     }
   }
 
-  // Function which updates the address transaction
   async function updateAddress() {
     try {
       setLoading(true);
@@ -79,7 +67,6 @@ export default function ManageDomain() {
     }
   }
 
-  // Function which runs the renewal transaction
   async function renew() {
     try {
       setLoading(true);
@@ -99,13 +86,8 @@ export default function ManageDomain() {
     }
   }
 
-  // Function which calculates cost of renewal
   async function getCost() {
-    if (
-      domainInfo &&
-      domainInfo.name.replace(".fns", "").length > 0 &&
-      renewFor > 0
-    ) {
+    if (domainInfo.name.replace(".fns", "").length > 0 && renewFor > 0) {
       const duration = (renewFor * SECONDS_PER_YEAR).toFixed(1).toString();
       const c = await getRentCost(
         domainInfo.name.replace(".fns", ""),
@@ -115,14 +97,12 @@ export default function ManageDomain() {
     }
   }
 
-  // Load domain info if user is initialized and page is loaded
   useEffect(() => {
     if (router && router.query && isInitialized) {
       loadDomainInfo();
     }
   }, [router]);
 
-  // Calculate cost everytime domainInfo or duration changes
   useEffect(() => {
     getCost();
   }, [domainInfo, renewFor]);

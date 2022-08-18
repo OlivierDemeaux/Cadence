@@ -19,5 +19,6 @@
   color: antiquewhite;
   background-color: darkslategray;
   border-radius: 2em;
+  cursor: pointer;
   max-width: 65ch;
 }
